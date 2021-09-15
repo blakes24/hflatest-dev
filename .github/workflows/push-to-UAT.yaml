@@ -16,7 +16,7 @@ jobs:
       with:
         source_file: 'src'
         destination_repo: 'blakes24/hflatest-uat'
-        destination_folder: 'src'
+        destination_folder: '/'
         user_email: 'blakes24@gmail.com'
         user_name: 'blakes24'
         commit_message: 'from dev repo'
