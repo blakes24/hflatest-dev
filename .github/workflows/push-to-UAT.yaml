@@ -1,0 +1,22 @@
+nname: Push File
+
+on: push
+
+jobs:
+  copy-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Pushes test file
+      uses: dmnemec/copy_file_to_another_repo_action@main
+      env:
+        API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+      with:
+        source_file: '/'
+        destination_repo: 'blakes24/hflatest-uat'
+        destination_folder: '/'
+        user_email: 'blakes24@gmail.com'
+        user_name: 'blakes24'
+        commit_message: 'from dev repo'
