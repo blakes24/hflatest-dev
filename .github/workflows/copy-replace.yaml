@@ -1,0 +1,25 @@
+name: Copy and replace
+
+on: workflow_dispatch
+
+jobs:
+  copy-file:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Checkout UAT repo
+      uses: actions/checkout@v2
+      with:
+        repository: blakes24/hflatest-uat
+        path: ./uat
+
+    # Copy site folder to uat
+    - name: Copy site folder
+      run: |
+        cp ./site ./uat
+        cd uat
+        git add .
+        git commit -m "update from dev"
+        git push -u origin main
