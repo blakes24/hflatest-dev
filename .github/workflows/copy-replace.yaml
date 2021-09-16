@@ -18,7 +18,7 @@ jobs:
     # Copy site folder to uat
     - name: Copy site folder
       run: |
-        cp ./site ./uat
+        cp -r ./site ./uat
         cd uat
         git add .
         git commit -m "update from dev"
