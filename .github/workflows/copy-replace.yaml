@@ -23,5 +23,12 @@ jobs:
         cp -r ./site ./uat
         cd uat
         git add .
-        git commit -m "update from dev"
-        git push -u origin main
+        if git status | grep -q "Changes to be committed"
+        then
+          git commit -m "update from dev"
+          git push -u origin main
+        else
+          echo "No changes detected"
+        fi
+        
+        
