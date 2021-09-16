@@ -18,6 +18,8 @@ jobs:
     # Copy site folder to uat
     - name: Copy site folder
       run: |
+        git config --global user.email "blakes24@gmail.com"
+        git config --global user.name "blakes24"
         cp -r ./site ./uat
         cd uat
         git add .
