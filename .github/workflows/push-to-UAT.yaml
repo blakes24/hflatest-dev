@@ -1,4 +1,4 @@
-name: Push To UAT
+name: Push changes to UAT
 
 on: workflow_dispatch
 
@@ -8,17 +8,28 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Get current date
-      id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%dT%H:%M:%S')"
-    - name: Pushes test file
-      uses: dmnemec/copy_file_to_another_repo_action@main
-      env:
-        API_TOKEN_GITHUB: ${{ secrets.ACCESS_TOKEN }}
+
+    - name: Checkout UAT repo
+      uses: actions/checkout@v2
       with:
-        source_file: 'site'
-        destination_repo: 'blakes24/hflatest-uat'
-        destination_folder: '/'
-        user_email: 'blakes24@gmail.com'
-        user_name: 'blakes24'
-        commit_message: 'Push from dev - ${{ steps.date.outputs.date }}'
+        repository: blakes24/hflatest-uat
+        path: ./uat
+        token: ${{ secrets.ACCESS_TOKEN }}
+
+    # Copy site folder to uat
+    - name: Copy changes to UAT
+      run: |
+        git config --global user.email "blakes24@gmail.com"
+        git config --global user.name "blakes24"
+        rsync -a --delete ./site/ ./uat/site/
+        cd uat
+        git add .
+        if git status | grep -q "Changes to be committed"
+        then
+          git commit -m "update from dev"
+          git push -u origin main
+        else
+          echo "No changes detected"
+        fi
+        
+        
