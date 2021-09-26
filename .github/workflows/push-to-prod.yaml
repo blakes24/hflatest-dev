@@ -1,4 +1,4 @@
-name: Push changes to UAT
+name: Push changes to prod
 
 on: workflow_dispatch
 
@@ -9,20 +9,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Checkout UAT repo
+    - name: Checkout prod repo
       uses: actions/checkout@v2
       with:
-        repository: blakes24/hflatest-uat
-        path: ./uat
+        repository: blakes24/hflatest-prod
+        path: ./prod
         token: ${{ secrets.ACCESS_TOKEN }}
 
-    # Copy site folder to uat
-    - name: Copy changes to UAT
+    # Copy site folder to prod
+    - name: Copy changes to prod
       run: |
         git config --global user.email "blakes24@gmail.com"
         git config --global user.name "blakes24"
-        rsync -a --delete ./site/ ./uat/site/
-        cd uat
+        rsync -a --delete ./site/ ./prod/site/
+        cd prod
         git add .
         if git status | grep -q "Changes to be committed"
         then
