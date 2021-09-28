@@ -21,7 +21,7 @@ jobs:
       run: |
         git config --global user.email "blakes24@gmail.com"
         git config --global user.name "blakes24"
-        rsync -a --delete ./site/ ./prod/site/
+        rsync -a --delete ./site/ ./prod/
         cd prod
         git add .
         if git status | grep -q "Changes to be committed"
